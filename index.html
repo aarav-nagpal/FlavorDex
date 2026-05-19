@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorDex - Recipe Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🍳 FlavorDex</h1>
+        <div class="search-container">
+            <!-- Input field for the user to type a recipe search query -->
+            <input type="text" id="searchInput" placeholder="Search recipes... (e.g., pasta)">
+            <button id="searchBtn">Search</button>
+        </div>
+        <!-- Button to toggle between search results and saved favorites -->
+        <button id="toggleFavsBtn" class="toggle-favs">❤️ My Favorites</button>
+        <script defer src="script.js"></script>
+    </header>
+
+    <main>
+        <h2 id="sectionTitle" class="section-title">Discover Recipes</h2>
+        <!-- Loader shown while API call is in progress -->
+        <div id="loader" class="loader">Loading recipes...</div>
+        <!-- Grid container where recipe cards are injected dynamically -->
+        <div id="recipeGrid" class="grid"></div>
+    </main>
+
+    <!-- Modal Overlay for displaying full recipe details -->
+    <div id="recipeModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="closeModalBtn" class="close-btn">&times;</button>
+            <h2 id="modalTitle">Recipe Title</h2>
+            <img id="modalImage" src="" alt="Recipe Image" class="modal-image">
+            <h3>Instructions</h3>
+            <p id="modalInstructions" class="instructions"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
