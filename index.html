@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlavorDex - Recipe Finder</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FlavorDex - Recipe Finder</title>
+        <link rel="stylesheet" href="style.css">
+        <script defer src="script.js"></script>
 </head>
 
 <body>
@@ -13,33 +14,67 @@
     <header>
         <h1>🍳 FlavorDex</h1>
         <div class="search-container">
-            <!-- Input field for the user to type a recipe search query -->
-            <input type="text" id="searchInput" placeholder="Search recipes... (e.g., pasta)">
+            <input type="text" id="searchInput" placeholder="Search recipes... (e.g., pasta, chicken)">
             <button id="searchBtn">Search</button>
         </div>
-        <!-- Button to toggle between search results and saved favorites -->
-        <button id="toggleFavsBtn" class="toggle-favs">❤️ My Favorites</button>
-        <script defer src="script.js"></script>
+        <div class="header-actions">
+            <button id="toggleFavsBtn" class="toggle-favs">❤️ Favorites <span id="favCount" class="fav-count">0</span></button>
+        </div>
     </header>
 
+    <!-- Category filter bar (populated dynamically from API) -->
+    <nav class="category-nav" id="categoryNav">
+        <button class="cat-btn active" data-category="all">All</button>
+    </nav>
+
     <main>
-        <h2 id="sectionTitle" class="section-title">Discover Recipes</h2>
-        <!-- Loader shown while API call is in progress -->
-        <div id="loader" class="loader">Loading recipes...</div>
-        <!-- Grid container where recipe cards are injected dynamically -->
+        <div class="toolbar">
+            <h2 id="sectionTitle" class="section-title">Discover Recipes</h2>
+            <!-- Sort dropdown -->
+            <select id="sortSelect" class="sort-select">
+                <option value="default">Sort: Default</option>
+                <option value="az">A → Z</option>
+                <option value="za">Z → A</option>
+            </select>
+        </div>
+
+        <div id="loader" class="loader">
+            <div class="spinner"></div>
+            <p>Cooking up results…</p>
+        </div>
         <div id="recipeGrid" class="grid"></div>
     </main>
 
-    <!-- Modal Overlay for displaying full recipe details -->
-    <div id="recipeModal" class="modal-overlay">
+    <!-- Recipe Detail Modal -->
+    <div id="recipeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
-            <button id="closeModalBtn" class="close-btn">&times;</button>
-            <h2 id="modalTitle">Recipe Title</h2>
-            <img id="modalImage" src="" alt="Recipe Image" class="modal-image">
-            <h3>Instructions</h3>
-            <p id="modalInstructions" class="instructions"></p>
+            <button id="closeModalBtn" class="close-btn" aria-label="Close">&times;</button>
+            <div class="modal-header">
+                <h2 id="modalTitle">Recipe Title</h2>
+                <span id="modalBadge" class="modal-badge"></span>
+            </div>
+            <img id="modalImage" class="modal-image" src="" alt="">
+
+            <!-- Ingredient list extracted dynamically -->
+            <div class="modal-section">
+                <h3>🥕 Ingredients</h3>
+                <ul id="modalIngredients" class="ingredient-list"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>📋 Instructions</h3>
+                <div id="modalInstructions" class="instructions"></div>
+            </div>
+
+            <!-- YouTube link if available -->
+            <div id="modalYoutube" class="youtube-link" style="display:none">
+                <a id="youtubeLink" href="#" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+            </div>
         </div>
     </div>
+
+    <!-- Toast notification element -->
+    <div id="toast" class="toast"></div>
 
 </body>
 
